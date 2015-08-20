@@ -1,4 +1,4 @@
-# ssl trustall certificates
+# trust all certificates
 
    Simple java agent that disables certificate validation.
 
