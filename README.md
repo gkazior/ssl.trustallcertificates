@@ -14,11 +14,17 @@
    Suppose you are running application which connnects to the host:
 
         java TestApp https://10.132.24.6:8443/
+           Unexpected exception: java.security.cert.CertificateException: No subject alternative names present
+           Exception in thread "main" javax.net.ssl.SSLHandshakeException: java.security.cert.CertificateException: No subject alternative names present
+                   at sun.security.ssl.Alerts.getSSLException(Unknown Source)
+                   at sun.security.ssl.SSLSocketImpl.fatal(Unknown Source)
 
-   and it ends with the javax.net.ssl.SSLHandshakeException exception.
+   and it ends with the exception.
    Then add the javaagent argument which disables the hostname verification.
 
-        java -javaagent:trustallcertificates.jar TestApp https://10.132.24.6:8443/
+        java -javaagent:trustallcertificates.jar TestApp https://10.133.105.54:8443/
+            Trying to connect to:https://10.133.105.54:8443/
+            <html><body><h1>It works!</h1></body></html>
 
    Usually it is enough to set JAVA_OPTS before running the java application, since many tools picks up the JAVA_OPTS variable:
 
@@ -34,65 +40,65 @@
 
    May be usefull when you have:
 
-   Unexpected exception: java.security.cert.CertificateException: No name matching XXX found
-   Exception in thread "main" javax.net.ssl.SSLHandshakeException: java.security.cert.CertificateException: No name matching XXX found
-        at sun.security.ssl.Alerts.getSSLException(Unknown Source)
-        at sun.security.ssl.SSLSocketImpl.fatal(Unknown Source)
-        at sun.security.ssl.Handshaker.fatalSE(Unknown Source)
-        at sun.security.ssl.Handshaker.fatalSE(Unknown Source)
-        at sun.security.ssl.ClientHandshaker.serverCertificate(Unknown Source)
-        at sun.security.ssl.ClientHandshaker.processMessage(Unknown Source)
-        at sun.security.ssl.Handshaker.processLoop(Unknown Source)
-        at sun.security.ssl.Handshaker.process_record(Unknown Source)
-        at sun.security.ssl.SSLSocketImpl.readRecord(Unknown Source)
-        at sun.security.ssl.SSLSocketImpl.performInitialHandshake(Unknown Source)
-        at sun.security.ssl.SSLSocketImpl.startHandshake(Unknown Source)
-        at sun.security.ssl.SSLSocketImpl.startHandshake(Unknown Source)
-        at sun.net.www.protocol.https.HttpsClient.afterConnect(Unknown Source)
-        at sun.net.www.protocol.https.AbstractDelegateHttpsURLConnection.connect(Unknown Source)
-        at sun.net.www.protocol.http.HttpURLConnection.getInputStream0(Unknown Source)
-        at sun.net.www.protocol.http.HttpURLConnection.getInputStream(Unknown Source)
-        at sun.net.www.protocol.https.HttpsURLConnectionImpl.getInputStream(Unknown Source)
-        at TestHelper.main(TestHelper.java:23)
-   Caused by: java.security.cert.CertificateException: No name matching XXX found
-        at sun.security.util.HostnameChecker.matchDNS(Unknown Source)
-        at sun.security.util.HostnameChecker.match(Unknown Source)
-        at sun.security.ssl.X509TrustManagerImpl.checkIdentity(Unknown Source)
-        at sun.security.ssl.X509TrustManagerImpl.checkIdentity(Unknown Source)
-        at sun.security.ssl.X509TrustManagerImpl.checkTrusted(Unknown Source)
-        at sun.security.ssl.X509TrustManagerImpl.checkServerTrusted(Unknown Source)
-        ... 14 more
+        Unexpected exception: java.security.cert.CertificateException: No name matching XXX found
+           Exception in thread "main" javax.net.ssl.SSLHandshakeException: java.security.cert.CertificateException: No name matching XXX found
+           at sun.security.ssl.Alerts.getSSLException(Unknown Source)
+           at sun.security.ssl.SSLSocketImpl.fatal(Unknown Source)
+           at sun.security.ssl.Handshaker.fatalSE(Unknown Source)
+           at sun.security.ssl.Handshaker.fatalSE(Unknown Source)
+           at sun.security.ssl.ClientHandshaker.serverCertificate(Unknown Source)
+           at sun.security.ssl.ClientHandshaker.processMessage(Unknown Source)
+           at sun.security.ssl.Handshaker.processLoop(Unknown Source)
+           at sun.security.ssl.Handshaker.process_record(Unknown Source)
+           at sun.security.ssl.SSLSocketImpl.readRecord(Unknown Source)
+           at sun.security.ssl.SSLSocketImpl.performInitialHandshake(Unknown Source)
+           at sun.security.ssl.SSLSocketImpl.startHandshake(Unknown Source)
+           at sun.security.ssl.SSLSocketImpl.startHandshake(Unknown Source)
+           at sun.net.www.protocol.https.HttpsClient.afterConnect(Unknown Source)
+           at sun.net.www.protocol.https.AbstractDelegateHttpsURLConnection.connect(Unknown Source)
+           at sun.net.www.protocol.http.HttpURLConnection.getInputStream0(Unknown Source)
+           at sun.net.www.protocol.http.HttpURLConnection.getInputStream(Unknown Source)
+           at sun.net.www.protocol.https.HttpsURLConnectionImpl.getInputStream(Unknown Source)
+           at TestHelper.main(TestHelper.java:23)
+        Caused by: java.security.cert.CertificateException: No name matching XXX found
+           at sun.security.util.HostnameChecker.matchDNS(Unknown Source)
+           at sun.security.util.HostnameChecker.match(Unknown Source)
+           at sun.security.ssl.X509TrustManagerImpl.checkIdentity(Unknown Source)
+           at sun.security.ssl.X509TrustManagerImpl.checkIdentity(Unknown Source)
+           at sun.security.ssl.X509TrustManagerImpl.checkTrusted(Unknown Source)
+           at sun.security.ssl.X509TrustManagerImpl.checkServerTrusted(Unknown Source)
+           ... 14 more
 
-   OR
+   or
 
-   Unexpected exception: java.security.cert.CertificateException: No subject alternative names present
-   Exception in thread "main" javax.net.ssl.SSLHandshakeException: java.security.cert.CertificateException: No subject alternative names present
-        at sun.security.ssl.Alerts.getSSLException(Unknown Source)
-        at sun.security.ssl.SSLSocketImpl.fatal(Unknown Source)
-        at sun.security.ssl.Handshaker.fatalSE(Unknown Source)
-        at sun.security.ssl.Handshaker.fatalSE(Unknown Source)
-        at sun.security.ssl.ClientHandshaker.serverCertificate(Unknown Source)
-        at sun.security.ssl.ClientHandshaker.processMessage(Unknown Source)
-        at sun.security.ssl.Handshaker.processLoop(Unknown Source)
-        at sun.security.ssl.Handshaker.process_record(Unknown Source)
-        at sun.security.ssl.SSLSocketImpl.readRecord(Unknown Source)
-        at sun.security.ssl.SSLSocketImpl.performInitialHandshake(Unknown Source)
-        at sun.security.ssl.SSLSocketImpl.startHandshake(Unknown Source)
-        at sun.security.ssl.SSLSocketImpl.startHandshake(Unknown Source)
-        at sun.net.www.protocol.https.HttpsClient.afterConnect(Unknown Source)
-        at sun.net.www.protocol.https.AbstractDelegateHttpsURLConnection.connect(Unknown Source)
-        at sun.net.www.protocol.http.HttpURLConnection.getInputStream0(Unknown Source)
-        at sun.net.www.protocol.http.HttpURLConnection.getInputStream(Unknown Source)
-        at sun.net.www.protocol.https.HttpsURLConnectionImpl.getInputStream(Unknown Source)
-        at TestHelper.main(TestHelper.java:23)
-   Caused by: java.security.cert.CertificateException: No subject alternative names present
-        at sun.security.util.HostnameChecker.matchIP(Unknown Source)
-        at sun.security.util.HostnameChecker.match(Unknown Source)
-        at sun.security.ssl.X509TrustManagerImpl.checkIdentity(Unknown Source)
-        at sun.security.ssl.X509TrustManagerImpl.checkIdentity(Unknown Source)
-        at sun.security.ssl.X509TrustManagerImpl.checkTrusted(Unknown Source)
-        at sun.security.ssl.X509TrustManagerImpl.checkServerTrusted(Unknown Source)
-        ... 14 more
+        Unexpected exception: java.security.cert.CertificateException: No subject alternative names present
+           Exception in thread "main" javax.net.ssl.SSLHandshakeException: java.security.cert.CertificateException: No subject alternative names present
+           at sun.security.ssl.Alerts.getSSLException(Unknown Source)
+           at sun.security.ssl.SSLSocketImpl.fatal(Unknown Source)
+           at sun.security.ssl.Handshaker.fatalSE(Unknown Source)
+           at sun.security.ssl.Handshaker.fatalSE(Unknown Source)
+           at sun.security.ssl.ClientHandshaker.serverCertificate(Unknown Source)
+           at sun.security.ssl.ClientHandshaker.processMessage(Unknown Source)
+           at sun.security.ssl.Handshaker.processLoop(Unknown Source)
+           at sun.security.ssl.Handshaker.process_record(Unknown Source)
+           at sun.security.ssl.SSLSocketImpl.readRecord(Unknown Source)
+           at sun.security.ssl.SSLSocketImpl.performInitialHandshake(Unknown Source)
+           at sun.security.ssl.SSLSocketImpl.startHandshake(Unknown Source)
+           at sun.security.ssl.SSLSocketImpl.startHandshake(Unknown Source)
+           at sun.net.www.protocol.https.HttpsClient.afterConnect(Unknown Source)
+           at sun.net.www.protocol.https.AbstractDelegateHttpsURLConnection.connect(Unknown Source)
+           at sun.net.www.protocol.http.HttpURLConnection.getInputStream0(Unknown Source)
+           at sun.net.www.protocol.http.HttpURLConnection.getInputStream(Unknown Source)
+           at sun.net.www.protocol.https.HttpsURLConnectionImpl.getInputStream(Unknown Source)
+           at TestHelper.main(TestHelper.java:23)
+        Caused by: java.security.cert.CertificateException: No subject alternative names present
+           at sun.security.util.HostnameChecker.matchIP(Unknown Source)
+           at sun.security.util.HostnameChecker.match(Unknown Source)
+           at sun.security.ssl.X509TrustManagerImpl.checkIdentity(Unknown Source)
+           at sun.security.ssl.X509TrustManagerImpl.checkIdentity(Unknown Source)
+           at sun.security.ssl.X509TrustManagerImpl.checkTrusted(Unknown Source)
+           at sun.security.ssl.X509TrustManagerImpl.checkServerTrusted(Unknown Source)
+           ... 14 more
 
 ## Caution
 
